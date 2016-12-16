@@ -33,8 +33,13 @@ func walk_r(dir string){
 					fmt.Println(err)
 				}
 				str := string(file)
-				if strings.Contains(str, search_string){
-					fmt.Println(path)
+				line := 0
+				temp := strings.Split(str, "\n")
+				for _, item := range temp {
+					if strings.Contains(item, search_string){
+						fmt.Println(line, path)
+					}
+					line++
 				}
 				
 			}
@@ -44,9 +49,9 @@ func walk_r(dir string){
 }
 
 func main() {
-	args := os.Args[1:3]
+	args := os.Args[1:]
+	
 	dir := args[0]
-
 	search_string = args[1]
 	
 	wg.Add(1)
