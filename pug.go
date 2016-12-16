@@ -22,20 +22,22 @@ func walk_r(dir string){
 		fmt.Println(err)
 	}
 	for _, v := range list{
-		path := fmt.Sprintf("%s/%s", dir, v.Name())
-		if v.IsDir() {
-			wg.Add(1)
-			go walk_r(path)
-		}else{
-			file, err := ioutil.ReadFile(path)
-			if err != nil {
-				fmt.Println(err)
+		if strings.HasPrefix(v.Name(), ".")==false{ //ignore hidden ones
+			path := fmt.Sprintf("%s%s%s", dir, string(os.PathSeparator), v.Name())
+			if v.IsDir() {
+				wg.Add(1)
+				go walk_r(path)
+			}else{
+				file, err := ioutil.ReadFile(path)
+				if err != nil {
+					fmt.Println(err)
+				}
+				str := string(file)
+				if strings.Contains(str, search_string){
+					fmt.Println(path)
+				}
+				
 			}
-			str := string(file)
-			if strings.Contains(str, search_string){
-				fmt.Println(path)
-			}
-			
 		}
 	}
 	wg.Done()
