@@ -6,10 +6,14 @@ import (
 	"sync"
 	"io/ioutil"
 	"strings"
+	"github.com/fatih/color"
 )
 
 var wg sync.WaitGroup
 var search_string string = ""
+
+var cyan = color.New(color.FgCyan)
+var boldCyan = cyan.Add(color.Bold)
 
 func walk_r(dir string){
 	f, err := os.Open(dir)
@@ -22,7 +26,7 @@ func walk_r(dir string){
 		fmt.Println(err)
 	}
 	for _, v := range list{
-		if strings.HasPrefix(v.Name(), ".")==false{ //ignore hidden ones
+		if strings.HasPrefix(v.Name(), ".")==false && strings.HasSuffix(v.Name(), ".log")==false{ //ignore hidden ones
 			path := fmt.Sprintf("%s%s%s", dir, string(os.PathSeparator), v.Name())
 			if v.IsDir() {
 				wg.Add(1)
@@ -35,11 +39,24 @@ func walk_r(dir string){
 				str := string(file)
 				line := 0
 				temp := strings.Split(str, "\n")
+				matched_lines := []string{}
 				for _, item := range temp {
 					if strings.Contains(item, search_string){
-						fmt.Println(line, path)
+						t1 := fmt.Sprintf("%d \t %s", line, item)
+						t2 := len(t1)
+						if len(t1) > 255{
+							t2 = 255
+						}
+						matched_lines = append(matched_lines, t1[:t2])
 					}
 					line++
+				}
+				if len(matched_lines) > 0{
+					
+					boldCyan.Println(path)
+					for _, str := range matched_lines{
+						color.Yellow(str)
+					}
 				}
 				
 			}
