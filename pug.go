@@ -26,7 +26,8 @@ func walk_r(dir string){
 		fmt.Println(err)
 	}
 	for _, v := range list{
-		if strings.HasPrefix(v.Name(), ".")==false && strings.HasSuffix(v.Name(), ".log")==false{ //ignore hidden ones
+		if strings.HasPrefix(v.Name(), ".")==false &&
+		   strings.HasSuffix(v.Name(), ".log")==false { 
 			path := fmt.Sprintf("%s%s%s", dir, string(os.PathSeparator), v.Name())
 			if v.IsDir() {
 				wg.Add(1)
@@ -67,9 +68,13 @@ func walk_r(dir string){
 
 func main() {
 	args := os.Args[1:]
-	
-	dir := args[0]
-	search_string = args[1]
+
+	dir := "."
+	search_string = args[0]
+
+	if len(args) > 1{
+		dir = args[1]
+	}
 	
 	wg.Add(1)
 	go walk_r(dir)
