@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"strings"
 	"github.com/fatih/color"
+	"github.com/CrowdSurge/banner"
 )
 
 var wg sync.WaitGroup
@@ -69,6 +70,9 @@ func walk_r(dir string){
 func main() {
 	args := os.Args[1:]
 
+	banner.Print("  pug  ")
+	fmt.Println("\n")
+	
 	dir := "."
 	search_string = args[0]
 
