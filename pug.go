@@ -44,7 +44,11 @@ func walk_r(dir string){
 				matched_lines := []string{}
 				for _, item := range temp {
 					if strings.Contains(item, search_string){
-						t1 := fmt.Sprintf("%d \t %s", line, item)
+						white := color.New(color.BgRed, color.FgYellow, color.Bold).SprintFunc()
+
+						h_item := strings.Replace(item, search_string, white(search_string), -1)
+						
+						t1 := fmt.Sprintf("%d \t %s", line, h_item)
 						t2 := len(t1)
 						if len(t1) > 255{
 							t2 = 255
