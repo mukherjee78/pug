@@ -2,6 +2,7 @@
 
 Usage: pug search_term [directory]
 
+![PUG]( https://github.com/siddhartham/pug/blob/master/pug.png?raw=true )
 
 # todo
 1. ~~search directory recursively~~
