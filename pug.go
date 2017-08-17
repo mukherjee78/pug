@@ -79,6 +79,7 @@ func main() {
 	args := os.Args[1:]
 
 	banner.Print("  pug  ")
+	color.Red("\n- by Siddhartha Mukherjee <mukherjee.siddhartha@gmail.com>")
 	color.Yellow("\nUsage: pug [search string] [optional: /path/to/search]\n")
 
 	dir := "."
